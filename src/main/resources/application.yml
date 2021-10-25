@@ -1,0 +1,21 @@
+server:
+  port: 8082
+#  servlet:
+#    context-path: /jwt-resource-server
+
+####### resource server configuration properties
+
+spring:
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          issuer-uri: http://localhost:8080/auth/realms/demorealm
+          #jwk-set-uri: http://localhost:8081/oauth-proxy/demorealm/certs
+
+
+
+
+logging:
+  level:
+    root: info
