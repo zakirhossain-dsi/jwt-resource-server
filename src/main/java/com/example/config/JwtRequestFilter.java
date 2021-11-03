@@ -4,6 +4,10 @@ import com.example.service.BlackListService;
 import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.MalformedJwtException;
 import org.apache.commons.lang3.StringUtils;
+import org.keycloak.authorization.client.AuthzClient;
+import org.keycloak.authorization.client.resource.AuthorizationResource;
+import org.keycloak.representations.idm.authorization.AuthorizationRequest;
+import org.keycloak.representations.idm.authorization.AuthorizationResponse;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
@@ -35,10 +39,22 @@ public class JwtRequestFilter extends OncePerRequestFilter {
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
             throws ServletException, IOException {
 
+        System.out.println("request uri: " + request.getRequestURI() + " method: " + request.getMethod());
+        AuthzClient authzClient = AuthzClient.create();
+        AuthorizationRequest authorizationRequest = new AuthorizationRequest();
+        AuthorizationResponse authorizationResponse = authzClient.authorization(getJwtFromRequest(request).get()).authorize(authorizationRequest);
+        String rpt = authorizationResponse.getToken();
+        System.out.println("You got an RPT: " + rpt);
+
+
         final Optional<String> jwt = getJwtFromRequest(request);
         jwt.ifPresent(token -> {
             try {
                 var value = blackListService.find(token);
+                /*
+                response.sendError(HttpServletResponse.SC_FORBIDDEN, "Forbidden");
+                response.setStatus(HttpServletResponse.SC_FORBIDDEN);
+                */
                 //if (jwtTokenService.validateToken(token)) {
                 if(StringUtils.isNotEmpty(value)){
                     response.sendError(HttpServletResponse.SC_UNAUTHORIZED, "Not authorized");

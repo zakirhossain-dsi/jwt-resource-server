@@ -60,6 +60,12 @@
 			<artifactId>jedis</artifactId>
 		</dependency>
 
+		<dependency>
+			<groupId>org.keycloak</groupId>
+			<artifactId>keycloak-authz-client</artifactId>
+			<version>8.0.1</version>
+		</dependency>
+
 	</dependencies>
 
 	<build>
