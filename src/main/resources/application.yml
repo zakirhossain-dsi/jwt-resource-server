@@ -27,13 +27,11 @@ keycloak:
         - ta
         - student
         - parent
-  policy-enforcer-config:
+  policyEnforcerConfig:
     paths:
       - path: /courses/*
         methods:
           - method: GET
-            scopes:
-              - view
+            scopes: [view]
           - method: DELETE
-            scopes:
-              - delete
+            scopes: [delete]
