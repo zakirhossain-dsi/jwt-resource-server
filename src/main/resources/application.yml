@@ -2,36 +2,11 @@ server:
   port: 8082
 #  servlet:
 #    context-path: /jwt-resource-server
+spring:
+  profiles:
+    include:
+      - keycloak-config
 
 logging:
   level:
     root: debug
-
-keycloak:
-  auth-server-url: http://localhost:8080/auth
-  realm: university
-  resource: course-management
-  credentials:
-    secret: feed05f8-c116-4744-b2ab-5baf601ce5e2
-  principal-attribute: preferred_username
-  ssl-required: external
-  use-resource-role-mappings: true
-  bearer-only: true
-  securityConstraints:
-    - securityCollections:
-        - name: course management
-          patterns:
-            - /courses/*
-      authRoles:
-        - teacher
-        - ta
-        - student
-        - parent
-  policyEnforcerConfig:
-    paths:
-      - path: /courses/*
-        methods:
-          - method: GET
-            scopes: [view]
-          - method: DELETE
-            scopes: [delete]
