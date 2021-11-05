@@ -13,14 +13,18 @@ keycloak:
         - name: course management
           patterns:
             - /courses/*
-      authRoles: [teacher, ta, student, parent]
+      authRoles: [teacher, ta, student, parent, coordinator]
   policyEnforcerConfig:
     paths:
-      - path: /courses/*
+      - path: /courses/{id}
         methods:
           - method: GET
             scopes: [view]
           - method: DELETE
             scopes: [delete]
+      - path: /courses/{id}/coordinate
+        methods:
+          - method: GET
+            scopes: [coordinate]
       - path: /greetings
         enforcementMode: DISABLED
