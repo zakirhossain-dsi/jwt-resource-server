@@ -24,8 +24,8 @@ public class CourseController {
     }
 
     @GetMapping("/greetings")
-    public ResponseEntity<String> sayHello(Principal principal) {
-        return ResponseEntity.ok(String.format("Hello %s !!", principal.getName()));
+    public ResponseEntity<String> sayHello() {
+        return ResponseEntity.ok("Hello there !!");
     }
 
     @GetMapping("/courses/{id}/coordinate")
