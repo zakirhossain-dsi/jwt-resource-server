@@ -24,12 +24,18 @@ public class CourseController {
     }
 
     @GetMapping("/greetings")
-    public ResponseEntity<String> sayHello(Principal principal) {
-        return ResponseEntity.ok(String.format("Hello %s !!", principal.getName()));
+    public ResponseEntity<String> sayHello() {
+        return ResponseEntity.ok("Hello there!!");
     }
 
     @GetMapping("/courses/{id}/coordinate")
     public ResponseEntity<String> coordinateStudent(@PathVariable long id, Principal principal){
         return ResponseEntity.ok(String.format("Course id - %s is being coordinated by %s", id, principal.getName()));
     }
+
+    @GetMapping("/customers")
+    public ResponseEntity<String> getCustomers(){
+        return ResponseEntity.ok("Hello");
+    }
+
 }

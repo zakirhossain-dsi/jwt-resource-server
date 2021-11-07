@@ -1,30 +1,17 @@
 keycloak:
   auth-server-url: http://localhost:8080/auth
-  realm: university
-  resource: course-management
-  credentials:
-    secret: feed05f8-c116-4744-b2ab-5baf601ce5e2
+  realm: demorealm
+  resource: springboot-microservice
+#  credentials:
+#    secret: 9daa0e0c-6491-4d7d-801d-9cab084d1503
   principal-attribute: preferred_username
   ssl-required: external
+  public-client: true
   use-resource-role-mappings: true
   bearer-only: true
   securityConstraints:
     - securityCollections:
         - name: course management
           patterns:
-            - /courses/*
-      authRoles: [teacher, ta, student, parent, coordinator]
-  policyEnforcerConfig:
-    paths:
-      - path: /courses/{id}
-        methods:
-          - method: GET
-            scopes: [view]
-          - method: DELETE
-            scopes: [delete]
-      - path: /courses/{id}/coordinate
-        methods:
-          - method: GET
-            scopes: [coordinate]
-      - path: /greetings
-        enforcementMode: DISABLED
+            - /customers
+      authRoles: [user]
