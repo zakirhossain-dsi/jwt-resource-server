@@ -1,0 +1,155 @@
+{
+  "allowRemoteResourceManagement": true,
+  "policyEnforcementMode": "ENFORCING",
+  "resources": [
+    {
+      "name": "Course Resource",
+      "type": "http://localhost:8082/courses",
+      "ownerManagedAccess": true,
+      "displayName": "Course Resource",
+      "attributes": {},
+      "_id": "636d332b-ea01-44a0-b903-7accc70adc92",
+      "uris": [
+        "/courses/*"
+      ],
+      "scopes": [
+        {
+          "name": "view"
+        },
+        {
+          "name": "coordinate"
+        },
+        {
+          "name": "delete"
+        }
+      ]
+    },
+    {
+      "name": "Library Resource",
+      "ownerManagedAccess": false,
+      "displayName": "Library Resource",
+      "attributes": {},
+      "_id": "bceadb7e-a7d2-48b0-aac8-9a0066ee6763",
+      "uris": [
+        "/library/*"
+      ],
+      "scopes": [
+        {
+          "name": "GET"
+        },
+        {
+          "name": "POST"
+        }
+      ]
+    }
+  ],
+  "policies": [
+    {
+      "id": "189b5ae3-b2be-4c25-9159-5c8e042b3c55",
+      "name": "only student policy",
+      "description": "Applicable for all students",
+      "type": "role",
+      "logic": "POSITIVE",
+      "decisionStrategy": "UNANIMOUS",
+      "config": {
+        "roles": "[{\"id\":\"course-management/student\",\"required\":false}]"
+      }
+    },
+    {
+      "id": "d5f8eb8a-fe0f-430e-bd40-c933fc4ebfd1",
+      "name": "only teacher policy",
+      "type": "role",
+      "logic": "POSITIVE",
+      "decisionStrategy": "UNANIMOUS",
+      "config": {
+        "roles": "[{\"id\":\"course-management/teacher\",\"required\":false}]"
+      }
+    },
+    {
+      "id": "09815a61-a2b0-4652-b716-cde9d1e27c0f",
+      "name": "only coordinator policy",
+      "description": "Applicable for all coordinators",
+      "type": "role",
+      "logic": "POSITIVE",
+      "decisionStrategy": "UNANIMOUS",
+      "config": {
+        "roles": "[{\"id\":\"course-management/coordinator\",\"required\":false}]"
+      }
+    },
+    {
+      "id": "765ee3dd-34e9-4cbe-b834-6a268a545ecd",
+      "name": "Course Delete Permission",
+      "description": "Course Delete Permission",
+      "type": "scope",
+      "logic": "POSITIVE",
+      "decisionStrategy": "UNANIMOUS",
+      "config": {
+        "resources": "[\"Course Resource\"]",
+        "scopes": "[\"delete\"]",
+        "applyPolicies": "[\"only teacher policy\"]"
+      }
+    },
+    {
+      "id": "4dbbc1a8-601e-40bd-bb1c-422d2022c922",
+      "name": "Course Coordinate Permission",
+      "type": "scope",
+      "logic": "POSITIVE",
+      "decisionStrategy": "UNANIMOUS",
+      "config": {
+        "resources": "[\"Course Resource\"]",
+        "scopes": "[\"coordinate\"]",
+        "applyPolicies": "[\"only coordinator policy\"]"
+      }
+    },
+    {
+      "id": "2865e7f1-afcd-41aa-a0f9-31bbcbc29a6f",
+      "name": "Course View Permission",
+      "description": "Course View Permission",
+      "type": "scope",
+      "logic": "POSITIVE",
+      "decisionStrategy": "AFFIRMATIVE",
+      "config": {
+        "resources": "[\"Course Resource\"]",
+        "scopes": "[\"view\"]",
+        "applyPolicies": "[\"only student policy\",\"only teacher policy\"]"
+      }
+    },
+    {
+      "id": "b2e000e6-91cc-4346-b93b-e3332e534f00",
+      "name": "library view permission",
+      "description": "Library view permission",
+      "type": "scope",
+      "logic": "POSITIVE",
+      "decisionStrategy": "UNANIMOUS",
+      "config": {
+        "resources": "[\"Library Resource\"]",
+        "scopes": "[\"GET\"]",
+        "applyPolicies": "[\"only teacher policy\"]"
+      }
+    }
+  ],
+  "scopes": [
+    {
+      "id": "bade1c15-7cff-462d-a6ea-c2fd9f947040",
+      "name": "view"
+    },
+    {
+      "id": "9c6793f4-72f8-4949-8e98-55e02f461e95",
+      "name": "delete"
+    },
+    {
+      "id": "9e6366ff-5394-4c10-a38f-d04578764071",
+      "name": "coordinate",
+      "displayName": "Coordinate"
+    },
+    {
+      "id": "318a4d17-cea9-4cf0-a300-43d8121560cb",
+      "name": "GET"
+    },
+    {
+      "id": "772cf280-59a7-47c2-8c02-9fbd7ef60c9a",
+      "name": "POST"
+    }
+  ],
+  "decisionStrategy": "UNANIMOUS"
+}
