@@ -14,7 +14,13 @@ keycloak:
           patterns:
             - /courses/*
       authRoles: [teacher, ta, student, parent, coordinator]
+    - securityCollections:
+        - name: library resource
+          patterns:
+            - /library/*
+      authRoles: [teacher, ta, student, parent, coordinator]
   policyEnforcerConfig:
+    httpMethodAsScope: true
     paths:
       - path: /courses/{id}
         methods:
@@ -26,5 +32,9 @@ keycloak:
         methods:
           - method: GET
             scopes: [coordinate]
+      - path: /library/{id}
+        methods:
+          - method: GET
+            scopes: [view]
       - path: /greetings
         enforcementMode: DISABLED
