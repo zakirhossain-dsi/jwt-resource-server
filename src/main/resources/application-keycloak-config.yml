@@ -10,11 +10,9 @@ keycloak:
   bearerOnly: true
   securityConstraints:
     - securityCollections:
-        - name: course management
+        - name: course resource
           patterns:
             - /courses/*
-      authRoles: [teacher, ta, student, parent, coordinator]
-    - securityCollections:
         - name: library resource
           patterns:
             - /library/*
@@ -33,8 +31,8 @@ keycloak:
           - method: GET
             scopes: [coordinate]
       - path: /library/{id}
-        methods:
-          - method: GET
-            scopes: [view]
+#        methods:
+#          - method: GET
+#            scopes: [view]
       - path: /greetings
         enforcementMode: DISABLED
