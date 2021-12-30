@@ -18,7 +18,7 @@ keycloak:
             - /library/*
       authRoles: [teacher, ta, student, parent, coordinator]
   policyEnforcerConfig:
-    httpMethodAsScope: true
+    #httpMethodAsScope: true
     paths:
       - path: /courses/{id}
         methods:
@@ -31,8 +31,8 @@ keycloak:
           - method: GET
             scopes: [coordinate]
       - path: /library/{id}
-#        methods:
-#          - method: GET
-#            scopes: [view]
+        methods:
+          - method: GET
+            scopes: [view]
       - path: /greetings
         enforcementMode: DISABLED
